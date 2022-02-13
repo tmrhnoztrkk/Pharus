@@ -1,0 +1,51 @@
+---
+username: username
+password: password
+model: junos
+resolve_dns: true
+interval: 3600
+use_syslog: false
+debug: false
+threads: 30
+timeout: 20
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+rest: 127.0.0.1:8888
+next_adds_job: false
+vars: {}
+groups: {}
+models: {}
+pid: "/root/.config/oxidized/pid"
+input:
+  default: ssh, telnet
+  debug: true
+  ssh:
+    secure: false
+source:
+  default: http
+  debug: false
+  http:
+    url: https://pharus.arya-it.com/api/v0/oxidized
+    map:
+      name: hostname
+      model: os
+      group: group
+    headers:
+      X-Auth-Token: fa87def2051ae945708838b379e2a757
+output:
+  default: git
+  single_repo: true
+  git:
+    user: Oxidized
+    email: oxidized@arya-it.com
+    repo: "/opt/oxidized/output/devices.git"
+model_map:
+  juniper: junos
+  cisco: ios
+  fortinet: fortios
+  ruijie: ios
+  Procurve: hp
+groups:
+  fortigate:
+    username: arya.destek
+    password: testpassword  

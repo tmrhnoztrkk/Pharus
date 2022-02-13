@@ -1,0 +1,16 @@
+# Using this cron file requires an additional user on your system, please see install docs.
+
+#33   */6  * * *   pharus    /opt/pharus/cronic /opt/pharus/discovery-wrapper.py 1
+*/5  *    * * *   pharus    /opt/pharus/discovery.php -h new >> /dev/null 2>&1
+*/5  *    * * *   pharus    /opt/pharus/cronic /opt/pharus/poller-wrapper.py 32
+*    *    * * *   pharus    /opt/pharus/alerts.php >> /dev/null 2>&1
+*/5  *    * * *   pharus    /opt/pharus/poll-billing.php >> /dev/null 2>&1
+01   *    * * *   pharus    /opt/pharus/billing-calculate.php >> /dev/null 2>&1
+*/5  *    * * *   pharus    /opt/pharus/check-services.php >> /dev/null 2>&1
+#20 0 * * * pharus /usr/bin/python3 /opt/pharus/snmp-scan.py 10.255.0.0/16
+
+# Daily maintenance script. DO NOT DISABLE!
+# If you want to modify updates:
+#  Switch to monthly stable release: https://docs.pharus.org/General/Releases/
+#  Disable updates: https://docs.pharus.org/General/Updating/
+15   0    * * *   pharus    /opt/pharus/daily.sh >> /dev/null 2>&1
